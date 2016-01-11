@@ -25,6 +25,7 @@
   function configProvider() {
     var configPath;
     var listeners = [];
+    var config;
 
     this.useConfigPath = function(value) {
       configPath = value;
@@ -34,19 +35,22 @@
       listeners.push(fn);
     };
 
-    this.$get = function configFactory($http, $log) {
-      var config = $http.get(configPath);
-      config = config.then(function(data) {
-        // the old promise is extended with the new data
-        angular.extend(config, data.data);
-        // run every attached listener
-        listeners.forEach(function(listener) {
-          listener(config);
+    this.$get = function configFactory($http, $log, $q) {
+      if (!config) {
+        config = $q.defer();
+        $http.get(configPath).then(function(data) {
+          // the old promise is extended with the new data
+          var rawConfig = data.data;
+          // run every attached listener
+          listeners.forEach(function(listener) {
+            listener(rawConfig);
+          });
+          $log.debug('Configuration downloaded and stored.');
+          config.resolve(rawConfig);
         });
-        $log.debug('Configuration downloaded and stored.');
-      });
+      }
       // return the temporary promise
-      return config;
+      return config.promise;
     };
 
     return this;

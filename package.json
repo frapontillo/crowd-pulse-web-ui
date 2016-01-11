@@ -1,9 +1,9 @@
 {
   "name": "crowd-pulse-web-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Crowd Pulse Web Application",
   "bin": {
-    "crowd-pulse-web-service": "bin/crowd-pulse-web-ui.js"
+    "crowd-pulse-web-ui": "bin/crowd-pulse-web-ui.js"
   },
   "scripts": {
     "start": "node bin/crowd-pulse-web-ui.js",

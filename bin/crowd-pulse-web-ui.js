@@ -22,7 +22,7 @@ try {
 app.get('/config.json', function (req, res) {
   res.send(jsonConfig);
 });
-app.use(express.static('dist'));
+app.use(express.static(__dirname + '/../dist'));
 
 // start server
 var server = app.listen(process.env.CROWD_PULSE_UI_PORT || 3000, function () {
