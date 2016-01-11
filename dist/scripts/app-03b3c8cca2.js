@@ -373,7 +373,7 @@ function(){"use strict";function e(e){return e.service("indices")}angular.module
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function(){"use strict";function e(){var e,t=[];return this.useConfigPath=function(t){e=t},this.addConfigResolvedListener=function(e){t.push(e)},this.$get=["$http","$log",function(n,a){var i=n.get(e);return i=i.then(function(e){angular.extend(i,e.data),t.forEach(function(e){e(i)}),a.debug("Configuration downloaded and stored.")})}],this}angular.module("webUi").provider("config",e)}(),/*
+function(){"use strict";function e(){var e,t,n=[];return this.useConfigPath=function(t){e=t},this.addConfigResolvedListener=function(e){n.push(e)},this.$get=["$http","$log","$q",function(a,i,o){return t||(t=o.defer(),a.get(e).then(function(e){var a=e.data;n.forEach(function(e){e(a)}),i.debug("Configuration downloaded and stored."),t.resolve(a)})),t.promise}],this}angular.module("webUi").provider("config",e)}(),/*
  * Copyright 2015 Francesco Pontillo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
